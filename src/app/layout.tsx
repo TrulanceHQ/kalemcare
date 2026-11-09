@@ -4,27 +4,54 @@ import "@fontsource-variable/cinzel";
 import "@fontsource/cormorant-garamond/500-italic.css";
 import "@fontsource/cormorant-garamond/600.css";
 import "./globals.css";
+import { seo, siteUrl } from "@/content/seo";
 
+// The share image comes from src/app/opengraph-image.png and twitter-image.png (file convention),
+// and the tab icons from src/app/icon.svg and apple-icon.png.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kalemcare.com"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "KALEM Home Care Services · Non-medical home care in Ontario",
-    template: "%s · KALEM Home Care Services",
+    default: seo.title,
+    template: `%s · ${seo.name}`,
   },
-  description:
-    "Compassionate, dependable non-medical home care and support across Ontario. Companionship, personal support, meal and home support, respite and flexible care.",
+  description: seo.description,
+  applicationName: seo.name,
+  keywords: seo.keywords,
+  authors: [{ name: seo.name, url: siteUrl }],
+  creator: seo.name,
+  publisher: seo.name,
+  category: "Home care",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "KALEM Home Care Services",
-    description: "Care You Can Count On. Dignity You Can Feel.",
-    url: "https://kalemcare.com",
-    siteName: "KALEM Home Care Services",
-    locale: "en_CA",
     type: "website",
+    url: "/",
+    siteName: seo.name,
+    title: seo.name,
+    description: seo.shareDescription,
+    locale: seo.locale,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: seo.name,
+    description: seo.shareDescription,
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#4A0868",
+  themeColor: seo.themeColor,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
