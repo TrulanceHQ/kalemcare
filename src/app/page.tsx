@@ -13,10 +13,16 @@ import Quality from "@/components/Quality";
 import Services from "@/components/Services";
 import Steps from "@/components/Steps";
 import Values from "@/components/Values";
+import { structuredData } from "@/content/seo";
 
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        // JSON.stringify does not escape "<", so replace it to keep the script tag safe.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData()).replace(/</g, "\\u003c") }}
+      />
       <Header />
       <main>
         <Hero />

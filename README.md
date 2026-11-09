@@ -33,9 +33,13 @@ src/
     globals.css     Tailwind setup and the KALEM brand tokens
     icon.svg        favicon (KALEM app icon)
     apple-icon.png  home-screen icon for iPhone/iPad
+    opengraph-image.png / twitter-image.png   1200×630 link-preview image (+ .alt.txt)
+    robots.ts, sitemap.ts, manifest.ts        /robots.txt, /sitemap.xml, /manifest.webmanifest
   components/       one file per section (Header, Hero, Services, Contact…)
   content/site.ts   ALL website text, phone and email: edit copy here
+  content/seo.ts    Google title/description, keywords, share text and structured data
 public/brand/       KALEM logo files (horizontal, stacked, icon; colour and reversed)
+public/icons/       192 and 512 px app icons for the web manifest
 ```
 
 **To change wording**, edit `src/content/site.ts`; the components only handle layout.
@@ -46,6 +50,18 @@ public/brand/       KALEM logo files (horizontal, stacked, icon; colour and reve
 `font-accent` (Cormorant Garamond, italic) and the default `font-sans` (Jost). Use them like
 `bg-purple`, `text-gold-light`, `font-display`. The fonts are bundled from npm (Fontsource), so
 nothing loads from Google at runtime.
+
+## Search and sharing (SEO)
+
+- **Title, description, keywords and share text** live in `src/content/seo.ts`.
+- **Link-preview image** (WhatsApp, LinkedIn, Facebook, X): replace `src/app/opengraph-image.png`
+  and `twitter-image.png` with a new 1200×630 PNG and update the `.alt.txt` files.
+- **Structured data** (schema.org JSON-LD in `page.tsx`) tells Google KALEM is a local business,
+  with its phone, email and services. Add a street address there once there is a public one.
+- **New pages:** add them to `src/app/sitemap.ts`.
+- After launch: add the site to Google Search Console, submit `https://kalemcare.com/sitemap.xml`,
+  create a Google Business Profile, and test link previews with the LinkedIn Post Inspector and the
+  Facebook Sharing Debugger. Redirect `www.kalemcare.com` to `kalemcare.com` at the host.
 
 ## Before going live
 
