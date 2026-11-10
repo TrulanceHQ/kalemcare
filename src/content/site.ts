@@ -186,7 +186,7 @@ export const services = {
     },
     {
       title: "Community & Daily-Living Support",
-      intro: ["Where appropriate and within our service scope, KALEM support clients with:"],
+      intro: ["Where appropriate and within our service scope, KALEM supports clients with:"],
       items: [
         "Errands",
         "Shopping assistance",
@@ -201,7 +201,7 @@ export const services = {
     {
       title: "Short-Term & Flexible Support",
       intro: [
-        "Life doesn't always follow a schedule. KALEM provide flexible support for appropriate short-term needs, including:",
+        "Life doesn't always follow a schedule. KALEM provides flexible support for appropriate short-term needs, including:",
       ],
       items: [
         "Temporary family-caregiver relief",
@@ -426,7 +426,7 @@ export const contactSection = {
 export const commitment = {
   eyebrow: "Our commitment",
   lines: [
-    "At KALEM, we believe we believe care should be timed, patient and intentional.",
+    "At KALEM, we believe care should be timely, patient and intentional.",
     "We are here to provide the support—and the peace of mind—that makes home feel like home.",
   ],
 };
