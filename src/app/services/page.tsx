@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import ServiceIcon, { type ServiceIconName } from "@/components/ServiceIcon";
-import { Container, CtaBand, PageHero } from "@/components/ui";
+import Link from "next/link";
+import { Arrow, CheckList, Container, CtaBand, PageHero, PhoneIcon } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -131,10 +132,12 @@ const services: Service[] = [
 export default function ServicesPage() {
   return (
     <>
-      <PageHero eyebrow="Our services" title="Care that fits" accent="real life.">
-        <p className="quote text-[24px] leading-snug text-purple">
-          Every person is different. Every family is different. Every home is different.
-        </p>
+      <PageHero
+        eyebrow="Our services"
+        title={<>Care that fits <em>real life</em></>}
+        photo={{ src: "/photos/kalem-companionship-tea.jpg", alt: "A KALEM caregiver holding hands with an older woman over a cup of tea", position: "60% center" }}
+      >
+        <p>Every person is different. Every family is different. Every home is different.</p>
         <p>
           That is why KALEM does not believe in a one-size-fits-all approach. We begin by understanding the person, the family,
           the routine, the environment and the kind of support that is actually needed. Then we build care around that
@@ -142,65 +145,60 @@ export default function ServicesPage() {
         </p>
       </PageHero>
 
-      <Container className="grid gap-12 py-16 md:py-24 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-16">
-        {/* side index */}
-        <nav aria-label="Services on this page" className="hidden lg:block">
-          <ol className="sticky top-40 space-y-1 border-l border-line">
-            {services.map((s, i) => (
-              <li key={s.slug}>
-                <a
-                  href={`#${s.slug}`}
-                  className="-ml-px flex gap-3 border-l-2 border-transparent py-2 pl-5 text-[15px] text-muted no-underline hover:border-gold hover:text-purple"
-                >
-                  <span className="font-display text-[12px] text-gold">0{i + 1}</span>
-                  {s.title}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
-
-        <div className="space-y-6">
-          {services.map((s, i) => (
-            <article
+      {/* quick jump links */}
+      <nav aria-label="Services on this page" className="sticky top-[73px] z-30 border-b border-line bg-white/95 backdrop-blur md:top-[113px]">
+        <Container className="flex gap-2 overflow-x-auto py-3 [scrollbar-width:none]">
+          {services.map((s) => (
+            <a
               key={s.slug}
-              id={s.slug}
-              className="overflow-hidden rounded-[32px] border border-line bg-white shadow-[0_30px_80px_-60px_rgb(36_10_49/0.5)]"
+              href={`#${s.slug}`}
+              className="shrink-0 rounded-full border border-line px-4 py-1.5 text-[14px] font-medium whitespace-nowrap text-ink no-underline hover:border-purple hover:text-purple"
             >
-              {s.photo && (
-                <div className="relative aspect-[21/9] bg-cream">
-                  <Image src={s.photo.src} alt={s.photo.alt} fill sizes="(min-width: 1024px) 900px, 100vw" className="object-cover" />
-                </div>
-              )}
-              <div className="grid gap-10 p-7 sm:p-10 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:p-12">
-                <div>
-                  <div className="flex items-center gap-4">
-                    <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-lilac text-purple">
-                      <ServiceIcon name={s.icon} className="h-7 w-7" />
-                    </span>
-                    <span className="font-display text-[12px] tracking-[0.2em] text-gold">0{i + 1} / 06</span>
-                  </div>
-                  <h2 className="subheading mt-6 text-[clamp(30px,3vw,40px)]">{s.title}</h2>
-                  <div className="mt-4 space-y-3 text-muted">
-                    {s.intro.map((p) => (
-                      <p key={p}>{p}</p>
-                    ))}
-                  </div>
-                  {s.note && <p className="mt-4 font-medium text-plum">{s.note}</p>}
-                </div>
-                <div className="flex flex-col">
-                  <ul className="tick-list rounded-[24px] bg-ivory p-6 sm:p-7">
-                    {s.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                  <p className="quote mt-6 border-l-2 border-gold pl-5 text-[22px] leading-snug text-purple">{s.close}</p>
+              {s.title}
+            </a>
+          ))}
+        </Container>
+      </nav>
+
+      {services.map((s, i) => (
+        <section key={s.slug} id={s.slug} className={`py-16 md:py-24 ${i % 2 ? "bg-ivory" : "bg-white"}`}>
+          <Container className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className={s.photo && i % 2 ? "lg:order-2" : ""}>
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-lilac text-purple">
+                <ServiceIcon name={s.icon} className="h-6 w-6" />
+              </span>
+              <h2 className="h2 mt-5">{s.title}</h2>
+              <div className="lede mt-4 space-y-3">
+                {s.intro.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+              <CheckList items={s.items} className="mt-6 grid gap-x-6 space-y-0 gap-y-3 sm:grid-cols-2" />
+              {s.note && <p className="mt-6 text-muted">{s.note}</p>}
+              <p className="mt-2 font-serif text-[22px] leading-snug text-purple">{s.close}</p>
+            </div>
+            {s.photo ? (
+              <div className={`relative aspect-[4/3] overflow-hidden rounded-[24px] bg-line ${i % 2 ? "lg:order-1" : ""}`}>
+                <Image src={s.photo.src} alt={s.photo.alt} fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" />
+              </div>
+            ) : (
+              <div className="card bg-white lg:mt-16">
+                <p className="eyebrow">Get started</p>
+                <p className="mt-3 font-serif text-[24px] leading-snug text-plum">Start with a conversation.</p>
+                <p className="mt-2 text-muted">You don&apos;t have to figure everything out alone.</p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link href="/contact" className="btn-primary">
+                    Start a conversation <Arrow />
+                  </Link>
+                  <a href="tel:+14374608142" className="btn-secondary">
+                    <PhoneIcon /> (437) 460-8142
+                  </a>
                 </div>
               </div>
-            </article>
-          ))}
-        </div>
-      </Container>
+            )}
+          </Container>
+        </section>
+      ))}
 
       <CtaBand />
     </>

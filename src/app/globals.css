@@ -1,33 +1,26 @@
 @import "tailwindcss";
 
-/* KALEM brand tokens (see the brand guidelines). Use them as Tailwind utilities,
-   e.g. bg-purple, text-gold-light, border-line, font-serif, font-display. */
+/* KALEM brand tokens. Use them as Tailwind utilities, e.g. bg-purple, text-muted, border-line.
+   Purple is for buttons, links, the footer and one closing banner per page; pages stay light. */
 @theme {
-  --color-purple: #4a0868; /* Royal Purple · primary */
-  --color-plum: #361049; /* Deep Plum · secondary */
-  --color-night: #240a31; /* Darkest plum · footer, deep panels */
-  --color-violet: #6a1585; /* Violet · hover states */
-  --color-lilac: #efe4f2; /* Soft purple tint · chips and quiet panels */
-  --color-gold: #cfa162; /* Warm Gold · rules and accents */
-  --color-gold-light: #e8c68e; /* Light Gold · gold text on purple */
-  --color-bronze: #8a5e2a; /* Bronze · small gold-toned labels on cream */
-  --color-cream: #f5e9d3; /* Cream · warm panels */
-  --color-ivory: #fbf6ec; /* Ivory · page background */
-  --color-ink: #2a1633; /* Ink · body text */
-  --color-line: #e9d9bc; /* Borders and dividers */
-  --color-sand: #eadbc0; /* Body text on purple */
-  --color-muted: #5b4a66; /* Secondary text on light backgrounds */
+  --color-purple: #4a0868; /* Royal Purple · primary, buttons */
+  --color-violet: #6a1585; /* Violet · hover */
+  --color-plum: #2e0f3d; /* Deep Plum · headings, footer */
+  --color-lilac: #f3ecf6; /* Soft purple tint · icon circles, highlights */
+  --color-gold: #cfa162; /* Warm Gold · small accents only */
+  --color-gold-soft: #f7efe2; /* Pale gold · quiet highlights */
+  --color-ivory: #fbf8f3; /* Warm off-white · alternate sections */
+  --color-ink: #2a1d31; /* Body text */
+  --color-muted: #6a5f70; /* Secondary text */
+  --color-line: #ece5dc; /* Borders and dividers */
 
-  --font-sans: "Jost Variable", "Century Gothic", Arial, sans-serif;
-  --font-serif: "Cormorant Garamond", Garamond, Georgia, serif; /* headings and quotes */
-  --font-display: "Cinzel Variable", Georgia, serif; /* the wordmark's face · small labels only */
-
-  --radius-arch: 999px 999px 28px 28px;
+  --font-sans: "Figtree Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Fraunces Variable", Georgia, serif;
 }
 
 /* shared button shape, used by the .btn-* classes below */
 @utility btn {
-  @apply inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-[15px] text-[16px] font-medium tracking-[0.01em] no-underline transition-all duration-200;
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[16px] font-semibold no-underline transition-colors duration-200;
 }
 
 @layer base {
@@ -40,10 +33,10 @@
     }
   }
   [id] {
-    scroll-margin-top: 120px;
+    scroll-margin-top: 110px;
   }
   body {
-    @apply bg-ivory font-sans text-[17px] leading-[1.65] text-ink antialiased;
+    @apply bg-white font-sans text-[17px] leading-[1.7] text-ink antialiased;
   }
   a {
     @apply text-purple transition-colors hover:text-violet;
@@ -51,77 +44,61 @@
   h1,
   h2,
   h3 {
-    @apply font-serif text-balance text-purple;
+    @apply font-serif font-medium text-balance text-plum;
+    font-variation-settings: "SOFT" 60;
+    letter-spacing: -0.015em;
+  }
+  em {
+    @apply text-purple;
   }
   ::selection {
-    @apply bg-gold-light text-plum;
+    @apply bg-lilac text-plum;
   }
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-gold;
+    @apply outline-2 outline-offset-2 outline-purple;
   }
 }
 
 @layer components {
-  /* small spaced capitals above headings, set in the wordmark face */
   .eyebrow {
-    @apply inline-flex items-center gap-3 font-display text-[12px] font-semibold tracking-[0.28em] text-bronze uppercase;
+    @apply text-[13px] font-semibold tracking-[0.14em] text-purple uppercase;
   }
-  .eyebrow::before {
-    content: "";
-    @apply h-px w-8 bg-gold;
+  .h1 {
+    @apply text-[clamp(38px,5vw,60px)] leading-[1.08];
   }
-  .eyebrow-light {
-    @apply text-gold-light;
+  .h2 {
+    @apply text-[clamp(30px,3.4vw,44px)] leading-[1.12];
   }
-
-  .display {
-    @apply font-serif text-[clamp(44px,6.4vw,84px)] leading-[0.98] font-semibold tracking-[-0.01em];
-  }
-  .heading {
-    @apply font-serif text-[clamp(34px,4.2vw,54px)] leading-[1.05] font-semibold tracking-[-0.005em];
-  }
-  .subheading {
-    @apply font-serif text-[clamp(26px,2.6vw,32px)] leading-[1.15] font-semibold;
+  .h3 {
+    @apply text-[22px] leading-[1.25];
   }
   .lede {
-    @apply text-[clamp(18px,1.6vw,20px)] leading-[1.6] text-muted;
-  }
-  .quote {
-    @apply font-serif font-medium italic;
+    @apply text-[clamp(18px,1.5vw,20px)] leading-[1.65] text-muted;
   }
 
   .btn-primary {
-    @apply btn bg-purple text-ivory shadow-[0_10px_30px_-12px_rgb(74_8_104/0.6)] hover:-translate-y-px hover:bg-violet hover:text-ivory;
+    @apply btn bg-purple text-white hover:bg-violet hover:text-white;
   }
-  .btn-gold {
-    @apply btn bg-gold text-night hover:-translate-y-px hover:bg-gold-light hover:text-night;
+  .btn-secondary {
+    @apply btn border border-line bg-white text-plum hover:border-purple hover:text-purple;
   }
-  .btn-ghost {
-    @apply btn border border-purple/25 text-purple hover:border-purple hover:bg-purple hover:text-ivory;
-  }
-  .btn-ghost-light {
-    @apply btn border border-gold-light/40 text-ivory hover:border-gold-light hover:bg-gold-light hover:text-night;
+  .btn-light {
+    @apply btn bg-white text-purple hover:bg-gold-soft hover:text-purple;
   }
 
-  .tick-list {
-    @apply space-y-2.5;
+  .card {
+    @apply rounded-[20px] border border-line bg-white p-7 sm:p-8;
   }
-  .tick-list > li {
-    @apply relative pl-7;
+
+  .check-list > li {
+    @apply relative pl-8;
   }
-  .tick-list > li::before {
+  .check-list > li::before {
     content: "";
-    @apply absolute top-[0.62em] left-0 h-[7px] w-[7px] rotate-45 bg-gold;
-  }
-
-  /* arch-topped frame: the doorway of a home */
-  .arch {
-    border-radius: var(--radius-arch);
-  }
-
-  .paper {
-    background-color: var(--color-ivory);
-    background-image: radial-gradient(rgb(207 161 98 / 0.13) 1px, transparent 1px);
-    background-size: 22px 22px;
+    @apply absolute top-[0.45em] left-0 h-[18px] w-[18px] rounded-full bg-lilac;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A0868' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12 4 4 8-8'/%3E%3C/svg%3E");
+    background-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 }

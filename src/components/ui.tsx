@@ -3,16 +3,54 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`mx-auto w-full max-w-[1240px] px-5 sm:px-8 ${className}`}>{children}</div>;
+  return <div className={`mx-auto w-full max-w-[1200px] px-5 sm:px-8 ${className}`}>{children}</div>;
 }
 
-export function Eyebrow({ children, light = false, className = "" }: { children: ReactNode; light?: boolean; className?: string }) {
-  return <p className={`eyebrow ${light ? "eyebrow-light" : ""} ${className}`}>{children}</p>;
-}
-
-export function TickList({ items, className = "" }: { items: string[]; className?: string }) {
+/** Standard vertical rhythm for every page section. */
+export function Section({
+  children,
+  tone = "white",
+  className = "",
+  id,
+}: {
+  children: ReactNode;
+  tone?: "white" | "ivory";
+  className?: string;
+  id?: string;
+}) {
   return (
-    <ul className={`tick-list ${className}`}>
+    <section id={id} className={`py-20 md:py-28 ${tone === "ivory" ? "bg-ivory" : "bg-white"} ${className}`}>
+      <Container>{children}</Container>
+    </section>
+  );
+}
+
+/** Eyebrow, heading and optional intro used at the top of sections. */
+export function SectionHeading({
+  eyebrow,
+  title,
+  children,
+  center = false,
+  className = "",
+}: {
+  eyebrow?: string;
+  title: ReactNode;
+  children?: ReactNode;
+  center?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={`max-w-[720px] ${center ? "mx-auto text-center" : ""} ${className}`}>
+      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+      <h2 className={`h2 ${eyebrow ? "mt-4" : ""}`}>{title}</h2>
+      {children && <div className="lede mt-5 space-y-4">{children}</div>}
+    </div>
+  );
+}
+
+export function CheckList({ items, className = "" }: { items: string[]; className?: string }) {
+  return (
+    <ul className={`check-list space-y-3 ${className}`}>
       {items.map((item) => (
         <li key={item}>{item}</li>
       ))}
@@ -20,68 +58,47 @@ export function TickList({ items, className = "" }: { items: string[]; className
   );
 }
 
-/** A photo inside an arch-topped frame, with an offset gold outline behind it. */
-export function ArchPhoto({
-  src,
-  alt,
-  sizes,
-  priority = false,
-  position = "center",
-  className = "",
-}: {
-  src: string;
-  alt: string;
-  sizes: string;
-  priority?: boolean;
-  position?: string;
-  className?: string;
-}) {
-  return (
-    <div className={`relative ${className}`}>
-      <div aria-hidden className="arch absolute inset-0 translate-x-4 translate-y-4 border border-gold" />
-      <div className="arch relative h-full w-full overflow-hidden bg-cream">
-        <Image src={src} alt={alt} fill priority={priority} sizes={sizes} className="object-cover" style={{ objectPosition: position }} />
-      </div>
-    </div>
-  );
-}
-
-/** Top of every inner page: eyebrow, title, intro, on a dotted paper background. */
+/** Top of every inner page: eyebrow, title, intro, with an optional photo. */
 export function PageHero({
   eyebrow,
   title,
-  accent,
   children,
-  aside,
+  photo,
 }: {
   eyebrow: string;
   title: ReactNode;
-  accent?: ReactNode;
   children?: ReactNode;
-  aside?: ReactNode;
+  photo?: { src: string; alt: string; position?: string };
 }) {
   return (
-    <section className="paper relative overflow-hidden border-b border-line">
-      <Container className="grid items-end gap-10 pt-16 pb-14 md:pt-24 md:pb-20 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-        <div>
-          <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="display mt-6">
-            {title}
-            {accent && (
-              <>
-                <br />
-                <span className="font-medium text-bronze italic">{accent}</span>
-              </>
-            )}
-          </h1>
+    <section className="bg-ivory">
+      <Container
+        className={`grid items-center gap-12 py-16 md:py-24 ${photo ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16" : ""}`}
+      >
+        <div className={photo ? "" : "max-w-[760px]"}>
+          <p className="eyebrow">{eyebrow}</p>
+          <h1 className="h1 mt-4">{title}</h1>
+          {children && <div className="lede mt-6 space-y-4">{children}</div>}
         </div>
-        {(children || aside) && <div className="lede max-w-[520px] space-y-4 lg:pb-3">{children ?? aside}</div>}
+        {photo && (
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-line">
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              priority
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="object-cover"
+              style={{ objectPosition: photo.position ?? "center" }}
+            />
+          </div>
+        )}
       </Container>
     </section>
   );
 }
 
-/** Closing call to action used at the foot of most pages. */
+/** Closing call to action used at the foot of each page. */
 export function CtaBand({
   title = "Start with a conversation.",
   body = "You don't have to figure everything out alone.",
@@ -90,22 +107,23 @@ export function CtaBand({
   body?: string;
 }) {
   return (
-    <section className="py-20 md:py-28">
+    <section className="bg-white py-20 md:py-24">
       <Container>
-        <div className="relative overflow-hidden rounded-[36px] bg-purple px-7 py-14 text-center text-sand md:px-16 md:py-20">
-          <ArchMotif className="absolute -top-24 -left-16 h-[340px] w-[260px] text-gold/25" />
-          <ArchMotif className="absolute -right-10 -bottom-32 h-[380px] w-[290px] text-gold/20" />
-          <div className="relative">
-            <h2 className="heading text-ivory">{title}</h2>
-            <p className="quote mx-auto mt-4 max-w-[560px] text-[24px] text-gold-light">{body}</p>
-            <div className="mt-9 flex flex-wrap justify-center gap-3.5">
-              <Link href="/contact" className="btn-gold">
-                Start a conversation <Arrow />
-              </Link>
-              <a href="tel:+14374608142" className="btn-ghost-light">
-                <PhoneIcon /> Call (437) 460-8142
-              </a>
-            </div>
+        <div className="flex flex-col items-start justify-between gap-8 rounded-[28px] bg-purple px-8 py-12 md:flex-row md:items-center md:px-14 md:py-14">
+          <div>
+            <h2 className="h2 text-white">{title}</h2>
+            <p className="mt-3 text-[18px] text-white/80">{body}</p>
+          </div>
+          <div className="flex shrink-0 flex-wrap gap-3">
+            <Link href="/contact" className="btn-light">
+              Start a conversation <Arrow />
+            </Link>
+            <a
+              href="tel:+14374608142"
+              className="btn border border-white/30 text-white hover:border-white hover:bg-white/10 hover:text-white"
+            >
+              <PhoneIcon /> (437) 460-8142
+            </a>
           </div>
         </div>
       </Container>
@@ -113,19 +131,21 @@ export function CtaBand({
   );
 }
 
-export function ArchMotif({ className = "" }: { className?: string }) {
-  return (
-    <svg aria-hidden viewBox="0 0 260 340" fill="none" className={className}>
-      <path d="M10 340V130C10 64 64 10 130 10s120 54 120 120v210" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M40 340V135c0-50 40-90 90-90s90 40 90 90v205" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M70 340V140c0-33 27-60 60-60s60 27 60 60v200" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  );
-}
+const iconProps = {
+  "aria-hidden": true,
+  width: 18,
+  height: 18,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
 
 export function Arrow({ className = "" }: { className?: string }) {
   return (
-    <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <svg {...iconProps} className={className}>
       <path d="M5 12h14M13 6l6 6-6 6" />
     </svg>
   );
@@ -133,7 +153,7 @@ export function Arrow({ className = "" }: { className?: string }) {
 
 export function PhoneIcon({ className = "" }: { className?: string }) {
   return (
-    <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <svg {...iconProps} strokeWidth={1.8} className={className}>
       <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />
     </svg>
   );
@@ -141,9 +161,17 @@ export function PhoneIcon({ className = "" }: { className?: string }) {
 
 export function MailIcon({ className = "" }: { className?: string }) {
   return (
-    <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <svg {...iconProps} strokeWidth={1.8} className={className}>
       <rect x="3" y="5" width="18" height="14" rx="2" />
       <path d="m3 7 9 6 9-6" />
+    </svg>
+  );
+}
+
+export function CheckIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg {...iconProps} strokeWidth={2.4} className={className}>
+      <path d="m6 12 4 4 8-8" />
     </svg>
   );
 }

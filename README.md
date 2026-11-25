@@ -39,7 +39,7 @@ src/
     globals.css           Tailwind setup and the KALEM brand tokens
     icon.svg, apple-icon.png, opengraph-image.png …  icons and link-preview images
     robots.ts, sitemap.ts, manifest.ts
-  components/             shared building blocks (Header, Footer, ContactForm, CarePicker, ui.tsx)
+  components/             shared building blocks (Header, Footer, ContactForm, CarePicker, ServiceIcon, ui.tsx)
 public/brand/             KALEM logo files
 public/photos/            photos used on the pages
 ```
@@ -51,11 +51,13 @@ and the `CtaBand` in `ui.tsx`. If the phone number or email changes, search the 
 `460-8142` or `hello@kalemcare.com` to find every place it appears.
 
 **Brand colours and fonts** are Tailwind tokens defined in `src/app/globals.css`:
-`purple` #4A0868, `plum` #361049, `night` #240A31, `violet` #6A1585, `lilac` #EFE4F2, `gold` #CFA162,
-`gold-light` #E8C68E, `bronze` #8A5E2A, `cream` #F5E9D3, `ivory` #FBF6EC, `ink` #2A1633. Headings use
-`font-serif` (Cormorant Garamond), small labels use `font-display` (Cinzel, the wordmark face) and body
-text uses the default `font-sans` (Jost). The fonts are bundled from npm (Fontsource), so nothing loads
-from Google at runtime. The arch shape (`.arch`) is the site's recurring motif: the doorway of a home.
+`purple` #4A0868 (buttons and links), `violet` #6A1585 (hover), `plum` #2E0F3D (headings, footer),
+`lilac` #F3ECF6 and `gold-soft` #F7EFE2 (soft highlights), `gold` #CFA162 (small accents), `ivory`
+#FBF8F3 (alternate sections), `ink` #2A1D31, `muted` #6A5F70 and `line` #ECE5DC. Pages stay light;
+purple is kept for buttons, the footer and one closing banner per page. Headings use `font-serif`
+(Fraunces) and body text uses the default `font-sans` (Figtree). Both are bundled from npm
+(Fontsource), so nothing loads from Google at runtime. Reusable classes: `.h1`, `.h2`, `.h3`,
+`.eyebrow`, `.lede`, `.card`, `.btn-primary`, `.btn-secondary` and `.check-list`.
 
 ## Search and sharing (SEO)
 

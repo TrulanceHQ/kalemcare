@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
 const field =
-  "w-full rounded-2xl border border-line bg-ivory px-4 py-3.5 font-normal text-ink outline-none transition placeholder:text-muted/60 focus:border-purple focus:bg-white focus:ring-4 focus:ring-purple/10";
-const label = "flex flex-col gap-2 text-[14px] font-medium tracking-[0.01em] text-plum";
+  "w-full rounded-xl border border-line bg-white px-4 py-3 font-normal text-ink outline-none transition focus:border-purple focus:ring-4 focus:ring-purple/10";
+const label = "flex flex-col gap-2 text-[15px] font-semibold text-plum";
 
 /**
  * The form opens the visitor's email app with the enquiry filled in, so it works
@@ -61,7 +61,7 @@ export default function ContactForm({ enquiryTypes }: { enquiryTypes: string[] }
       id="enquiry"
       ref={formRef}
       onSubmit={handleSubmit}
-      className="grid grid-cols-1 gap-5 rounded-[32px] border border-line bg-white p-6 shadow-[0_30px_80px_-50px_rgb(36_10_49/0.45)] sm:grid-cols-2 sm:p-10"
+      className="card grid grid-cols-1 gap-5 sm:grid-cols-2 sm:p-10"
     >
       <fieldset className="sm:col-span-2">
         <legend className={`${label} mb-3`}>I am</legend>
@@ -69,7 +69,7 @@ export default function ContactForm({ enquiryTypes }: { enquiryTypes: string[] }
           {enquiryTypes.map((t, i) => (
             <label
               key={t}
-              className="cursor-pointer rounded-full border border-line bg-ivory px-4 py-2 text-[14px] text-ink transition has-checked:border-purple has-checked:bg-purple has-checked:text-ivory has-focus-visible:ring-4 has-focus-visible:ring-purple/20"
+              className="cursor-pointer rounded-full border border-line bg-white px-4 py-2 text-[15px] text-ink transition hover:border-purple/50 has-checked:border-purple has-checked:bg-lilac has-checked:text-purple has-focus-visible:ring-4 has-focus-visible:ring-purple/20"
             >
               <input type="radio" name="type" value={t} defaultChecked={i === 0} className="sr-only" />
               {t}

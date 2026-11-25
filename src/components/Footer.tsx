@@ -1,19 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArchMotif, Container } from "./ui";
+import { Container } from "./ui";
 
-const linkClass = "text-sand no-underline hover:text-gold-light";
+const linkClass = "text-white/75 no-underline hover:text-white";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-night pb-24 text-sand md:pb-0">
-      <ArchMotif className="pointer-events-none absolute -top-10 right-[6%] hidden h-[420px] w-[320px] text-gold/10 md:block" />
-      <Container className="relative">
-        <div className="grid gap-12 border-b border-white/10 py-16 md:grid-cols-[1.4fr_1fr_1fr_1.1fr] md:py-20">
+    <footer className="bg-plum pb-24 text-white/75 md:pb-0">
+      <Container>
+        <div className="grid gap-12 border-b border-white/10 py-16 md:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
           <div>
-            <Image src="/brand/kalem-horizontal-reversed.svg" alt="KALEM Home Care Services" width={227} height={63} className="h-[58px] w-auto" />
-            <p className="quote mt-6 max-w-[320px] text-[23px] leading-snug text-gold-light">
+            <Image src="/brand/kalem-horizontal-reversed.svg" alt="KALEM Home Care Services" width={227} height={63} className="h-[54px] w-auto" />
+            <p className="mt-6 max-w-[300px] font-serif text-[20px] leading-snug text-white">
               Care You Can Count On. Dignity You Can Feel.
             </p>
           </div>
@@ -37,31 +36,29 @@ export default function Footer() {
 
           <FooterCol title="Talk to us">
             <li>
-              <a href="tel:+14374608142" className="font-serif text-[26px] font-semibold text-ivory no-underline hover:text-gold-light">
+              <a href="tel:+14374608142" className="text-[20px] font-semibold text-white no-underline hover:text-gold">
                 (437) 460-8142
               </a>
             </li>
             <li>
-              <a href="mailto:hello@kalemcare.com" className="text-sand hover:text-gold-light">
+              <a href="mailto:hello@kalemcare.com" className={linkClass}>
                 hello@kalemcare.com
               </a>
             </li>
             <li>
-              <span className="text-sand/70">Careers: </span>
-              <a href="mailto:careers@kalemcare.com" className="text-sand hover:text-gold-light">
+              Careers:{" "}
+              <a href="mailto:careers@kalemcare.com" className={linkClass}>
                 careers@kalemcare.com
               </a>
             </li>
           </FooterCol>
         </div>
 
-        <div className="flex flex-col gap-4 py-8 text-[13px] md:flex-row md:items-center md:justify-between">
-          <p className="max-w-[640px] text-[#CDB8D9]">
+        <div className="flex flex-col gap-3 py-8 text-[14px] md:flex-row md:items-center md:justify-between">
+          <p className="max-w-[640px] text-white/60">
             © 2026 KALEM Home Care Services · Serving Families. KALEM provides non-medical home care and support services.
           </p>
-          <p className="font-display text-[11px] tracking-[0.22em] text-gold-light/80 uppercase">
-            Excellence in Care · Compassionate Care · Reliable Support
-          </p>
+          <p className="text-white/60">Excellence in Care · Compassionate Care · Reliable Support</p>
         </div>
       </Container>
     </footer>
@@ -71,7 +68,7 @@ export default function Footer() {
 function FooterCol({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div>
-      <p className="font-display text-[12px] font-semibold tracking-[0.24em] text-gold uppercase">{title}</p>
+      <p className="text-[13px] font-semibold tracking-[0.14em] text-gold uppercase">{title}</p>
       <ul className="mt-5 space-y-2.5 text-[15px]">{children}</ul>
     </div>
   );
